@@ -1,0 +1,18 @@
+{
+  "name": "NLW-2",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UmFilipe/proffy-nlw.git"
+  },
+  "author": "Filipe M. Almeida",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
