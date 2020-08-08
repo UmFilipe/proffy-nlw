@@ -16,13 +16,13 @@ const subjects = [
     "Artes",
     "Biologia",
     "Ciências",
-    "Educação física",
+    "Educação Física",
     "Física",
     "Geografia",
     "História",
     "Matemática",
     "Português",
-    "Química",
+    "Química"
 ]
 
 const weekdays = [
@@ -32,7 +32,7 @@ const weekdays = [
     "Quarta-feira",
     "Quinta-feira",
     "Sexta-feira",
-    "Sábado",
+    "Sábado"
 ]
 
 const express = require('express')
@@ -44,6 +44,11 @@ nunjucks.configure('src/views', {
     noCache: true,
 })
 
+function getSubject(subjectNumber) {
+    const arrayPosition = +subjectNumber - 1
+    return subjects[arrayPosition]
+}
+
 server.use(express.static("public"))
 
 server.get("/", (req, res) => {
@@ -51,11 +56,26 @@ server.get("/", (req, res) => {
 })
 
 server.get("/study", (req, res) => {
-    return res.render("study.html", { proffys })
+    const filters = req.query
+    return res.render("study.html", { proffys, filters, subjects, weekdays })
 })
 
 server.get("/give-classes", (req, res) => {
-    return res.render("give-classes.html")
+    const filters = req.query
+    const data = filters   
+    const isNotEmpty = Object.keys(data).length > 0
+   
+
+    if (isNotEmpty) {
+
+        data.subject = getSubject(data.subject)
+
+        proffys.push(data)
+
+        return res.redirect("/study")
+    }
+
+    return res.render("give-classes.html", { subjects, weekdays, filters })
 })
 
 server.listen(3000)
