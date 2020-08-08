@@ -1,5 +1,5 @@
 {
-  "name": "NLW-2",
+  "name": "proffy-nlw",
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon src/server.js"
