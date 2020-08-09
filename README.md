@@ -9,5 +9,4 @@ Tecnologias usadas: Node.js, Express, SQLite e Nunjucks.
 ## Proffy
 
 O Proffy é uma plataforma de estudos online, onde o professor pode se cadastrar colocando suas 
-informações incluindo seus horários de aula, e o aluno pode pesquisar por professores, filtrando
-por horário de aula, dia, matéria, etc.
+informações incluindo seus horários de aula, matéria que ministra, etc, e o aluno pode pesquisar por professores, filtrando por horário de aula, dia, matéria, etc.
