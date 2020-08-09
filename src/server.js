@@ -1,81 +1,23 @@
-const proffys = [
-    { 
-    name: "Diego Fernandes", 
-    avatar: "https://avatars2.githubusercontent.com/u/2254731?s=460&amp;u=0ba16a79456c2f250e7579cb388fa18c5c2d7d65&amp;v=4",
-    whatsapp: "995923654",
-    bio: "Entusiasta das melhores tecnologias de química avançada. Apaixonado por explodir coisas em laboratório e por mudar a vida das pessoas através de experiências. Mais de 200.000 pessoas já passaram por uma das minhas explosões.",
-    subject: "Química",
-    cost: "20",
-    weekday: [0],
-    time_from: [],
-    time_to: []
-    }
-]
-
-const subjects = [
-    "Artes",
-    "Biologia",
-    "Ciências",
-    "Educação Física",
-    "Física",
-    "Geografia",
-    "História",
-    "Matemática",
-    "Português",
-    "Química"
-]
-
-const weekdays = [
-    "Domingo",
-    "Segunda-feira",
-    "Terça-feira",
-    "Quarta-feira",
-    "Quinta-feira",
-    "Sexta-feira",
-    "Sábado"
-]
-
 const express = require('express')
 const server = express()
 const nunjucks = require('nunjucks')
+const format = require('./utils/format')
+const { pageLanding, pageGiveClasses, pageStudy, saveClasses } = require('./pages')
 
 nunjucks.configure('src/views', {
     express: server,
     noCache: true,
 })
 
-function getSubject(subjectNumber) {
-    const arrayPosition = +subjectNumber - 1
-    return subjects[arrayPosition]
-}
-
 server.use(express.static("public"))
+server.use(express.urlencoded({ extended: true }))
 
-server.get("/", (req, res) => {
-    return res.render("index.html")
-})
+//renderização das paginas
 
-server.get("/study", (req, res) => {
-    const filters = req.query
-    return res.render("study.html", { proffys, filters, subjects, weekdays })
-})
+server.get("/", pageLanding)
+server.get("/study", pageStudy)
+server.get("/give-classes", pageGiveClasses)
+server.post("/save-classes", saveClasses)
 
-server.get("/give-classes", (req, res) => {
-    const filters = req.query
-    const data = filters   
-    const isNotEmpty = Object.keys(data).length > 0
-   
-
-    if (isNotEmpty) {
-
-        data.subject = getSubject(data.subject)
-
-        proffys.push(data)
-
-        return res.redirect("/study")
-    }
-
-    return res.render("give-classes.html", { subjects, weekdays, filters })
-})
-
+//porta em que o servidor será aberto (localhost:3000)
 server.listen(3000)
